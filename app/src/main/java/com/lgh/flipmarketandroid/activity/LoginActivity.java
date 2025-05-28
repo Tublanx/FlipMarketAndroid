@@ -40,13 +40,12 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             LoginRequest request = new LoginRequest(username, password);
-            ApiService apiService = RetrofitClient.getApiService();
+            ApiService apiService = RetrofitClient.getInstance(this).create(ApiService.class);
 
             apiService.login(request).enqueue(new Callback<LoginResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
-                    if (response.isSuccessful()) {
-                        assert response.body() != null;
+                    if (response.isSuccessful() && response.body() != null) {
                         String token = response.body().getAccessToken();
 
                         // save
