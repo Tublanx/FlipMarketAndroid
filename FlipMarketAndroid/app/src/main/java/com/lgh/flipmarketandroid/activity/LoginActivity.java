@@ -1,9 +1,12 @@
 package com.lgh.flipmarketandroid.activity;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,8 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.lgh.flipmarketandroid.R;
 import com.lgh.flipmarketandroid.config.ApiService;
 import com.lgh.flipmarketandroid.config.RetrofitClient;
-import com.lgh.flipmarketandroid.dto.LoginRequest;
-import com.lgh.flipmarketandroid.dto.LoginResponse;
+import com.lgh.flipmarketandroid.dto.user.LoginRequest;
+import com.lgh.flipmarketandroid.dto.user.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText usernameEditText = findViewById(R.id.username);
         EditText passwordEditText = findViewById(R.id.password);
         Button loginButton = findViewById(R.id.loginButton);
+        TextView registerText = findViewById(R.id.signUpTextView);
 
         loginButton.setOnClickListener(e -> {
             String username = usernameEditText.getText().toString();
@@ -63,6 +67,11 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "네트워크 오류", Toast.LENGTH_SHORT).show();
                 }
             });
+        });
+
+        registerText.setOnClickListener(e -> {
+            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         });
     }
 }

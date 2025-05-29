@@ -1,7 +1,7 @@
 package com.lgh.flipmarketandroid.config;
 
-import com.lgh.flipmarketandroid.dto.LoginRequest;
-import com.lgh.flipmarketandroid.dto.LoginResponse;
+import com.lgh.flipmarketandroid.dto.user.LoginRequest;
+import com.lgh.flipmarketandroid.dto.user.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

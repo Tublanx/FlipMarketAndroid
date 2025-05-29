@@ -1,4 +1,4 @@
-package com.lgh.flipmarketandroid.dto;
+package com.lgh.flipmarketandroid.dto.user;
 
 public class LoginResponse {
 
