@@ -8,12 +8,15 @@ public class RegisterRequest {
     private int age;
     private String phoneNum;
 
-    public RegisterRequest(String username, String password, String name, int age, String phoneNum) {
+    private String role;
+
+    public RegisterRequest(String username, String password, String name, int age, String phoneNum, String role) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.age = age;
         this.phoneNum = phoneNum;
+        this.role = role;
     }
 
 }
