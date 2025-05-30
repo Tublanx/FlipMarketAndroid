@@ -14,4 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@NativeQuery("SELECT * FROM user WHERE email = ?1")
 	Optional<User> findByEmail(String email);
 	
+	@NativeQuery("SELECT COUNT(*) FROM user WHERE email = ?1")
+	int countByEmail(String email);
+	
 }
