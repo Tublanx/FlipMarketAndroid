@@ -4,7 +4,7 @@
 - 국가대표 선발전 대비 Android에서의 RestAPI 숙달화 및 UI 지식 함양
 - 기존에 진행하던 프로젝트인 "FlipMarket"의 안드로이드 버전을 만들어보고 싶었음
 
-# 🛒 FlipMarket
+# 🛒 FlipMarketAndroid
 
 Android + Spring Boot 기반의 **상품 사고팔기 서비스**입니다.  
 사용자는 상품을 등록하고, 다른 사용자의 상품을 검색해 구매할 수 있습니다.
