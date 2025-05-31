@@ -11,4 +11,12 @@ public class RegisterResponse {
 		this.message = message;
 	}
 	
+	public String getMessage() {
+		return message;
+	}
+
+	public boolean isSuccess() {
+		return isSuccess;
+	}
+
 }
