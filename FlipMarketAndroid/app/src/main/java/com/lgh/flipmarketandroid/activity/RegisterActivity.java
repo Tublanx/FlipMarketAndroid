@@ -25,8 +25,6 @@ import com.lgh.flipmarketandroid.dto.user.RegisterResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -38,7 +36,6 @@ public class RegisterActivity extends AppCompatActivity {
     private String phoneNum;
     private String fullEmailVal = "";
     private boolean isCheckEmail = false;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         emailSpinner.setAdapter(adapter);
 
-
+        // 서버 통신 요청
+        ApiService apiService = RetrofitClient.getApiService();
 
         // "중복확인" 버튼 클릭 시 로직
         checkEmailButton.setOnClickListener(e1 -> {
@@ -99,20 +97,16 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             // 서버 통신 요청
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://192.168.219.106:8080/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
             EmailCheckRequest request = new EmailCheckRequest(fullEmailVal);
-            ApiService apiService = retrofit.create(ApiService.class);
 
             // 이메일 중복 여부 판단
             apiService.checkEmail(request).enqueue(new Callback<EmailCheckResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<EmailCheckResponse> call, @NonNull Response<EmailCheckResponse> response) {
+                    Log.d("RegisterActivity", "응답 성공: " + response.body());
+
                     if (response.isSuccessful() && response.body() != null) {
-                        if (response.body().isExists) {
+                        if (response.body().exists) {
                             Toast.makeText(getApplicationContext(), "이미 사용 중인 이메일입니다.", Toast.LENGTH_SHORT).show();
                             isCheckEmail = false;
                         } else {
@@ -124,6 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NonNull Call<EmailCheckResponse> call, @NonNull Throwable t) {
+                    Log.e("RegisterActivity", "API 요청 실패: ", t);
                     Toast.makeText(getApplicationContext(), "통신 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -138,6 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
             age = ageEditText.getText().toString().trim();
             phoneNum = phoneNumEditText.getText().toString().trim();
 
+            // 이메일 중복 확인을 안 했을 경우
             if (!isCheckEmail) {
                 Toast.makeText(getApplicationContext(), "이메일 중복 확인을 진행해주세요.", Toast.LENGTH_SHORT).show();
                 return;
@@ -174,15 +170,8 @@ public class RegisterActivity extends AppCompatActivity {
                 fullEmailVal = emailId + "@" + selectedEmail;
             }
 
-            // 서버 통신 요청
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://192.168.219.106:8080")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
             // 회원가입 진행 시 요청보낼 request 정의
             RegisterRequest request = new RegisterRequest(fullEmailVal, pwd, name, Integer.parseInt(age), phoneNum, "USER");
-            ApiService apiService = retrofit.create(ApiService.class);
 
             // 회원가입 진행
             apiService.register(request).enqueue(new Callback<RegisterResponse>() {
