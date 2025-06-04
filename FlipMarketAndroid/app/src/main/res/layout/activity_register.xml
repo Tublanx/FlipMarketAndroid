@@ -22,12 +22,12 @@
                 android:layout_width="0dp"
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:hint="이메일" />
+                android:hint="@string/register_email_text_string" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="\@"
+                android:text="@string/register_at_text_string"
                 android:textSize="18sp"
                 android:paddingHorizontal="4dp" />
 
@@ -41,16 +41,24 @@
                 android:id="@+id/btn_check_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="중복확인"
+                android:text="@string/register_duplicate_text_string"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
+
+        <!-- 비밀번호 -->
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_password_text_string"
+            android:inputType="textPassword" />
 
         <!-- 이름 -->
         <EditText
             android:id="@+id/editName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="이름"
+            android:hint="@string/register_name_text_string"
             android:inputType="textPersonName"/>
 
         <!-- 나이 -->
@@ -58,7 +66,7 @@
             android:id="@+id/editAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="나이"
+            android:hint="@string/register_age_text_string"
             android:inputType="number" />
 
         <!-- 전화번호 -->
@@ -66,38 +74,28 @@
             android:id="@+id/editPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="전화번호"
+            android:hint="@string/register_phone_text_string"
             android:inputType="phone"/>
-
-
-
-        <!-- 비밀번호 -->
-        <EditText
-            android:id="@+id/editPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="비밀번호"
-            android:inputType="textPassword"/>
 
         <!-- 버튼들 -->
         <Button
             android:id="@+id/btnSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="회원가입" />
+            android:text="@string/register_button_text_string" />
 
         <Button
             android:id="@+id/btnGoLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="로그인으로 돌아가기"
+            android:text="@string/register_login_text_string"
             android:layout_marginTop="12dp"/>
 
         <Button
             android:id="@+id/btnGoMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="메인으로 이동"
+            android:text="@string/register_main_text_string"
             android:layout_marginTop="12dp"/>
 
     </LinearLayout>
