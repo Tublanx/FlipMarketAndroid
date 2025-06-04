@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class EmailCheckResponse {
 
-    @SerializedName("exists")
     public boolean exists;
 
     public EmailCheckResponse() {

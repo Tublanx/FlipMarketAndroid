@@ -10,6 +10,10 @@ public class RegisterRequest {
 
     private String role;
 
+    public RegisterRequest() {
+
+    }
+
     public RegisterRequest(String username, String password, String name, int age, String phoneNum, String role) {
         this.username = username;
         this.password = password;
@@ -19,4 +23,27 @@ public class RegisterRequest {
         this.role = role;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public String getRole() {
+        return role;
+    }
 }
