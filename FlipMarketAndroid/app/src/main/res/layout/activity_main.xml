@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <!-- 상단 AppBar -->
     <androidx.appcompat.widget.Toolbar
@@ -30,11 +31,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView android:id="@+id/btnMyPage" android:text="마이페이지" style="@style/TopBarText" />
-        <TextView android:id="@+id/btnCart" android:text="장바구니" style="@style/TopBarText" />
-        <TextView android:id="@+id/btnRegister" android:text="상품 등록" style="@style/TopBarText" />
-        <TextView android:id="@+id/btnLogin" android:text="로그인" style="@style/TopBarText" />
-        <TextView android:id="@+id/btnSignup" android:text="회원가입" style="@style/TopBarText" />
+        <TextView android:id="@+id/btnMyPage" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="마이페이지" style="@style/TopBarText" />
+        <TextView android:id="@+id/btnCart" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="장바구니" style="@style/TopBarText" />
+        <TextView android:id="@+id/btnAddProduct" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="상품 등록" style="@style/TopBarText" />
+        <TextView android:id="@+id/btnLogin" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="로그인" style="@style/TopBarText" />
+        <TextView android:id="@+id/btnSignup" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="회원가입" style="@style/TopBarText" />
     </LinearLayout>
 
     <!-- 상품 리스트 -->
