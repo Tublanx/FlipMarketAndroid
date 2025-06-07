@@ -59,6 +59,10 @@ dependencies {
 
     // OkHttp Logging (네트워크 로그 디버깅용, 선택 사항)
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+
+    // CardView 의존성
+    implementation("androidx.cardview:cardview:1.0.0")
+
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
