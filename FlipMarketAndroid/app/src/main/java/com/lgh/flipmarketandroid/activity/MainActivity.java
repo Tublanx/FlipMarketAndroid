@@ -10,10 +10,21 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.flipmarketandroid.R;
+import com.lgh.flipmarketandroid.adapter.ProductAdapter;
+import com.lgh.flipmarketandroid.dto.product.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private ProductAdapter productAdapter;
+    private List<Product> productList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,6 +36,17 @@ public class MainActivity extends AppCompatActivity {
         TextView addProductTextView = findViewById(R.id.btnAddProduct);
         TextView loginTextView = findViewById(R.id.btnLogin);
         TextView signUpTextView = findViewById(R.id.btnSignup);
+
+        recyclerView = findViewById(R.id.recyclerViewProductList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        productList = new ArrayList<>();
+        productList.add(new Product("빈티지 자켓", 29000, "https://..."));
+        productList.add(new Product("청바지", 19000, "https://..."));
+        productList.add(new Product("가죽 신발", 49000, "https://..."));
+
+        productAdapter = new ProductAdapter(this, productList);
+        recyclerView.setAdapter(productAdapter);
 
         SharedPreferences sharedPref = getSharedPreferences("auth", MODE_PRIVATE);
         String token = sharedPref.getString("jwt", null);
