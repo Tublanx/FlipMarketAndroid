@@ -2,6 +2,7 @@ package com.lgh.flipmarketandroid.activity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.lgh.flipmarketandroid.R;
 import com.lgh.flipmarketandroid.config.ApiService;
 import com.lgh.flipmarketandroid.config.RetrofitClient;
+import com.lgh.flipmarketandroid.dto.product.User;
 import com.lgh.flipmarketandroid.dto.user.LoginRequest;
 import com.lgh.flipmarketandroid.dto.user.LoginResponse;
 
@@ -50,11 +52,20 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        String token = response.body().getAccessToken();
+                        LoginResponse loginResponse = response.body();
+
+                        String token = loginResponse.getAccessToken();
+                        User user = loginResponse.getUser();
+                        Long userNum = user.getNum();
 
                         // save
-                        getSharedPreferences("auth", MODE_PRIVATE)
-                                .edit().putString("jwt", token).apply();
+                        SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+
+                        editor.putString("jwt", token);
+                        editor.putLong("userNum", userNum);
+                        editor.apply();
+
                         Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
