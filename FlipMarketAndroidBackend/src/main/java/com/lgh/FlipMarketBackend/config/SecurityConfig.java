@@ -16,9 +16,8 @@ public class SecurityConfig { // JWT 필터 및 인증 설정 담당
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()).cors(cors -> {
-		}).authorizeHttpRequests(
-				auth -> auth.requestMatchers("/api/android/login", "/api/android/check-email", "/api/android/register")
-						.permitAll().anyRequest().authenticated())
+		}).authorizeHttpRequests(auth -> auth.requestMatchers("/api/android/login", "/api/android/check-email",
+				"/api/android/register", "/api/android/main").permitAll().anyRequest().authenticated())
 				.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		return http.build();

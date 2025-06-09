@@ -23,6 +23,10 @@ public class AuthService {
 		this.passwordEncoder = passwordEncoder;
 	}
 
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("사용자 없음"));
+	}
+
 	public String login(String username, String password) {
 		User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("사용자 없음"));
 
@@ -32,7 +36,7 @@ public class AuthService {
 
 		return jwtService.generatedToken(username);
 	}
-	
+
 	public boolean checkEmail(String username) {
 		return userRepository.countByEmail(username) > 0 ? true : false;
 	}
@@ -40,7 +44,7 @@ public class AuthService {
 	public void register(RegisterRequest request) {
 		User user = new User(request.getUsername(), request.getPassword(), request.getName(), request.getAge(),
 				request.getPhoneNum(), request.getRole());
-		
+
 		userRepository.save(user);
 	}
 

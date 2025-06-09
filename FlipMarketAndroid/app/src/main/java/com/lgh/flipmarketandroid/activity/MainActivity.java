@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.flipmarketandroid.R;
 import com.lgh.flipmarketandroid.adapter.ProductAdapter;
+import com.lgh.flipmarketandroid.config.ApiService;
+import com.lgh.flipmarketandroid.config.RetrofitClient;
 import com.lgh.flipmarketandroid.dto.product.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,19 +44,10 @@ public class MainActivity extends AppCompatActivity {
         TextView loginTextView = findViewById(R.id.btnLogin);
         TextView signUpTextView = findViewById(R.id.btnSignup);
 
-        recyclerView = findViewById(R.id.recyclerViewProductList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        productList = new ArrayList<>();
-        productList.add(new Product("빈티지 자켓", 29000, "https://..."));
-        productList.add(new Product("청바지", 19000, "https://..."));
-        productList.add(new Product("가죽 신발", 49000, "https://..."));
-
-        productAdapter = new ProductAdapter(this, productList);
-        recyclerView.setAdapter(productAdapter);
-
+        // 로그인 정보 확인
         SharedPreferences sharedPref = getSharedPreferences("auth", MODE_PRIVATE);
         String token = sharedPref.getString("jwt", null);
+        Long userNum = sharedPref.getLong("userNum", -1);
 
         boolean isLoggedIn = token != null;
 
@@ -62,6 +60,29 @@ public class MainActivity extends AppCompatActivity {
             addProductTextView.setVisibility(View.GONE);
             signUpTextView.setVisibility(View.VISIBLE);
         }
+
+        // 상품 리스트 나열
+        recyclerView = findViewById(R.id.recyclerViewProductList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        ApiService apiService = RetrofitClient.getApiService();
+
+        apiService.getProducts(userNum).enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    productList = response.body();
+
+                    productAdapter = new ProductAdapter(MainActivity.this, productList);
+                    recyclerView.setAdapter(productAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "상품 리스트 조회 오류", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         loginTextView.setOnClickListener(e -> {
             Log.e("MainActivity", "로그인 or 로그아웃 버튼 클릭 중");

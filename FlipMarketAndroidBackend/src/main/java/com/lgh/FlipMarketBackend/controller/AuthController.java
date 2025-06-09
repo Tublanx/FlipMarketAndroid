@@ -22,7 +22,7 @@ public class AuthController {
 	private final AuthService authService;
 
 	private final BCryptPasswordEncoder passwordEncoder;
-	
+
 	public AuthController(AuthService authService, BCryptPasswordEncoder passwordEncoder) {
 		this.authService = authService;
 		this.passwordEncoder = passwordEncoder;
@@ -31,9 +31,9 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
 		String token = authService.login(request.getUsername(), request.getPassword());
-		return ResponseEntity.ok(new LoginResponse(token));
+		return ResponseEntity.ok(new LoginResponse(token, authService.findByEmail(request.getUsername())));
 	}
-	
+
 	@PostMapping("/check-email")
 	public ResponseEntity<?> checkEmail(@RequestBody EmailCheckRequest request) {
 		boolean exists = authService.checkEmail(request.getUsername());
@@ -45,9 +45,9 @@ public class AuthController {
 		// 비밀번호 암호화 로직
 		String inputPassword = request.getPassword();
 		String encodedPassword = passwordEncoder.encode(inputPassword);
-		
+
 		request.setPassword(encodedPassword);
-		
+
 		try {
 			authService.register(request);
 			return ResponseEntity.ok(new RegisterResponse(true, "회원가입 성공"));

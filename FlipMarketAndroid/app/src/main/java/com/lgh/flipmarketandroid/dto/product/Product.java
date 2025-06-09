@@ -2,6 +2,8 @@ package com.lgh.flipmarketandroid.dto.product;
 
 public class Product {
 
+    private Long num;
+
     private String productName;
 
     private int price;
@@ -32,6 +34,10 @@ public class Product {
         this.imagePath = imagePath;
         this.stock = stock;
         this.likeCount = likeCount;
+    }
+
+    public Long getNum() {
+        return num;
     }
 
     public String getProductName() {
