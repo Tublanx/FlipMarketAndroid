@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,7 +21,6 @@ import com.lgh.flipmarketandroid.config.ApiService;
 import com.lgh.flipmarketandroid.config.RetrofitClient;
 import com.lgh.flipmarketandroid.dto.product.Product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         apiService.getProducts(userNum).enqueue(new Callback<List<Product>>() {
             @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+            public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     productList = response.body();
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), "상품 리스트 조회 오류", Toast.LENGTH_SHORT).show();
             }
         });
@@ -98,6 +98,31 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }
+        });
+
+        myPageTextView.setOnClickListener(e -> {
+            if (isLoggedIn) {
+                // 마이페이지로 이동
+                Intent intent = new Intent(getApplicationContext(), MypageActivity.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            } else {
+                Toast.makeText(getApplicationContext(), "로그인 하신 후에 이용 가능한 서비스입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        cartTextView.setOnClickListener(e -> {
+            if (isLoggedIn) {
+                // 장바구니로 이동
+                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            } else {
+                Toast.makeText(getApplicationContext(), "로그인 하신 후에 이용 가능한 서비스입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 각 상품 클릭 시 상품 상세 조회 화면으로 이동
+        recyclerView.setOnClickListener(e -> {
+
         });
     }
 }
